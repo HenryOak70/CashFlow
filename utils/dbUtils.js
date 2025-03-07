@@ -1,3 +1,6 @@
+// --- import queries from queries folder
+const queries = require('../queries');
+
 async function checkTableExists(pool, tableName) {
     try {
         const result = await pool.query(`
@@ -14,11 +17,11 @@ async function checkTableExists(pool, tableName) {
     }
 }
 
-async function fetchData(pool, tableName) {
+async function fetchData(pool, tableName, query) {
     try {
-        const tableExists = await checkTaleExists(pool, tableName);
+        const tableExists = await checkTableExists(pool, tableName);
         if(tableExists) {
-            const result = await pool.query(`SELECT * FROM ${tableName}`);
+            const result = await pool.query(`${query}${tableName}`);
             return result.rows;
         } else {
             return null;
@@ -29,4 +32,20 @@ async function fetchData(pool, tableName) {
     }
 }
 
-module.exports = { checkTableExists, fetchData };
+async function getTransactionById(pool, tableName, transactionId) {
+    try {
+        const tableExists = await checkTableExists(pool, tableName);
+        if(tableExists) {
+            const query = queries.qryById.replace('${tableName}', tableName);
+            const result = await pool.query(query, [transactionId]);
+            return result.rows;
+        } else {
+            return null;
+        }
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
+
+module.exports = { checkTableExists, fetchData, getTransactionById };
