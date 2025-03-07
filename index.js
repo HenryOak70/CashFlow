@@ -1,16 +1,9 @@
 const { app, pool } = require('./server');
+// --- imnport the transactions
+const transactionsRoutes = require('./routes/transactions');
+// --- import the test routes
+const testRoutes = require('./testRoutes');
 
-// --- test the db response
-app.get('/testdb',async (req, res) => {
-    try{
-        const result = await pool.query('SELECT NOW()');
-        res.json(result.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Database Error');
-    }
-});
-
-app.get('/',(req, res) => {
-    res.send('Welcome to CashFlow API!');
-});
+// --- mount the routes
+app.use('/trasactions', transactionsRoutes);
+app.use('/test', testRoutes);
