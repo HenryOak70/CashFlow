@@ -1,10 +1,10 @@
 const genericQueries = require('./generic');
-const transactionsQueries = require('./transactions');
-const entitiesQueries = require('./entities');
+//const transactionsQueries = require('./transactions');
+//const entitiesQueries = require('./entities');
 
 module.exports = {
     ...genericQueries,
-    ...transactionsQueries,
-    ...entitiesQueries,
+//    ...transactionsQueries,
+//    ...entitiesQueries,
     // ... add more queries as needed
 };
