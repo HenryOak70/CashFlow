@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const errors = require('./errors');
-const { pool } = require('./server'); // Import the pool
+const errors = require('../errors');
+const { pool } = require('../server'); // Import the pool
 
 // --- test the db response
 const TEST_DB_QUERY = 'SELECT NOW()';

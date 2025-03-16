@@ -3,12 +3,18 @@ const queries = require('../queries');
 // --- import error handling from errors folder
 const errors = require('../errors');
 
-async function checkTableExists(pool, tableName) {
+async function checkTableExists(pool, table) {
     try {
-        const result = await pool.query(queries.checkTableExists, [tableName]);
+        console.log('DEBUG: pool =', pool);
+    // ###DEBUG LOG ### check if the query is working
+        console.log(`Executing query: ${queries.checkTableExists} with params:`, [table]);
+        const result = await pool.query(queries.checkTableExists, [table]);
+        console.log(`Query result:`, result);
 
-        // --- ensure the query returs a valid response
-        if (result.rows.length === 0) {
+        // --- ensure the query returns a valid response
+        if (!result || !result.rows) {
+    // ###DEBUG LOG ### check if the result is undefined
+            console.error("Query returned undefined or null result:", result);
             return { error: errors.MSG_TABLE_NOT_FOUND };
         }
 
@@ -29,7 +35,11 @@ async function fetchData(pool, tableName, query, params = []) {
             return tableExists;
         }
 
+    // ###DEBUG LOG ### check if the query is running correctly
+        console.log(`Executing query: ${query} with params:`. params);
         const result = await pool.query(query, params);
+        console.log(`Query result:`. result);
+
         return result.rows;
     } catch (err) {
         console.error(errors.MSG_DB_QUERY_ERROR, err);

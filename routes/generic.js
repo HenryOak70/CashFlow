@@ -3,12 +3,12 @@ const errors = require('../errors');
 const queries = require('../queries/generic');
 const { fetchData, insertData, updateData, deleteData } = require('../utils/dbUtils');
 
-const createGenericRouter = (tableName) => {
+const createGenericRouter = (table, pool) => {
     const router = express.Router();
 
     router.get('/', async (req, res) => {
         try {
-            const data = await fetchData(tableName, queries.getAll());
+            const data = await fetchData(pool, table, queries.getAll(table));
             res.json(data);
         } catch (err) {
             console.error(errors.MSG_DB_QUERY_ERROR, err);
@@ -29,7 +29,7 @@ const createGenericRouter = (tableName) => {
                     error: errors.MSG_INVALID_ID,
                 });
             }
-            const data = await fetchData(tableName, queries.getById(), [id]);
+            const data = await fetchData(pool, table, queries.getById(table), [id]);
             if (data.length > 0) {
                 res.json(data[0]);
             } else {
@@ -54,7 +54,7 @@ const createGenericRouter = (tableName) => {
                     error: errors.MSG_INVALID_REQUEST_BODY,
                 });
             }
-            const data = await insertData(tableName, newData);
+            const data = await insertData(pool, table, newData);
             res.status(errors.HTTP_STATUS.CREATED).json(data);
         } catch (err) {
             console.error(errors.MSG_DB_QUERY_ERROR, err)
@@ -79,7 +79,7 @@ const createGenericRouter = (tableName) => {
                     error: errors.MSG_INVALID_REQUEST_BODY,
                 });
             }
-            const data = await updateData(tableName, updatedData, id);
+            const data = await updateData(pool, table, updatedData, id);
             res.json(data);
         } catch (err) {
             console.error(errors.MSG_DB_QUERY_ERROR, err);
@@ -98,7 +98,7 @@ const createGenericRouter = (tableName) => {
                     error: errors.MSG_INVALID_ID,
                 });
             }
-            const data = await deleteData(tableName, id);
+            const data = await deleteData(pool, table, id);
             res.json(data);
         } catch (err) {
             console.error(errors.MSG_DB_QUERY_ERROR, err);

@@ -36,7 +36,7 @@ try {
 }
 
 // --- setup all routes from routes/index.js
-setupRoutes(app);
+setupRoutes(app, pool);
 
 // --- graceful shutdown
 const shutdown = async () => {

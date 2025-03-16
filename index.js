@@ -1,14 +1,19 @@
 const { app, pool } = require('./server');
-
-// --- import the transactions
-const transactionsRoutes = require('./routes/transactions');
-// --- import the test routes
+const setupRoutes = require('./routes');
 const testRoutes = require('./testRoutes');
-// --- import error handling from errors folder
 const errors = require('./errors');
 
-// --- mount the routes
-app.use('/transactions', transactionsRoutes);
+// --- setup dynamic routes
+(async () => {
+    try {
+        await setupRoutes(app);
+        console.log(errors.MSG_ROUTES_SETUP_SUCCESS);
+    } catch (err) {
+        console.error(errors.MSG_ROUTES_SETUP_ERROR, err);
+        process.exit(1);
+    }
+})();
+
 app.use('/test', testRoutes);
 
 app.use((err, req, res, next) => {
