@@ -2,7 +2,7 @@
 // --- Is the pool working correctly?
 // #################
 
-const { pool } = require('../server');
+const { pool } = require('../../server');
 
 const testPool = async() =>{
     console.log('Checking database pool... ');

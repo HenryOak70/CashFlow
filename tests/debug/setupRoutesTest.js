@@ -4,9 +4,9 @@
 // #################
 
 const express = require('express');
-const { pool } = require('../server');
-const setupRoutes = require('../routes');
-const queries = require('../queries');
+const { pool } = require('../../server');
+const setupRoutes = require('../../routes');
+const queries = require('../../queries');
 
 // --- check if the module is working correctly
 console.log('Checking setupRoutes import:', setupRoutes);

@@ -1,6 +1,6 @@
 const { app, pool } = require('./server');
 const setupRoutes = require('./routes');
-const testRoutes = require('./testRoutes');
+const testRoutes = require('./tests');
 const errors = require('./errors');
 
 // --- setup dynamic routes

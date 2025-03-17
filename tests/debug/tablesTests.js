@@ -2,8 +2,8 @@
 // --- Are the table names retrieved successfully?
 // #################
 
-const { pool } = require('../server');
-const queries = require('../queries');
+const { pool } = require('../../server');
+const queries = require('../../queries');
 
 const testGetTables = async () => {
     try {

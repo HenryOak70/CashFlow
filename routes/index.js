@@ -34,8 +34,17 @@ const setupRoutes = async (app, pool) => {
             error: errors.MSG_ROUTES_SETUP_ERROR,
             details: err.message
         });
-        process.exit(1);
 
+        if (process.env.NODE_ENV !== 'test') {
+    // --- if not in test environments exit
+            process.exit(1);
+        } else {
+    // --- fail the test
+            throw new Error({
+                error: errors.MSG_ROUTES_SETUP_ERROR,
+                details: err.message
+            })
+        }
     }
 };
 

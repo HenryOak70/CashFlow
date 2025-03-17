@@ -8,7 +8,7 @@ const setupRoutes = require('./routes')
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
 const DEFAULT_DB_PORT = 5432;
 
 // --- enable CORS
@@ -55,9 +55,14 @@ const shutdown = async () => {
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-// --- start server
-app.listen(port, () => {
-    console.log(`${errors.MSG_SERVER_RUNNING} ${port}`);
-});
+// --- start server (but skip in tests)
+let server = null;
+if (process.env.NODE_ENV !== 'test'){
+    server = app.listen(port, () => {
+        console.log(`${errors.MSG_SERVER_RUNNING} ${port}`);
+    });
+} else {
+    server = { close: async () => {} };
+}
 
-module.exports = { app, pool };
+module.exports = { app, pool, server };

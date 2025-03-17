@@ -2,8 +2,8 @@
 // --- Is the query working correctly?
 // #################
 
-const { pool } = require('../server');
-const queries = require('../queries');
+const { pool } = require('../../server');
+const queries = require('../../queries');
 
 const queryToTest = { text: queries.getTables };
 
