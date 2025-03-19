@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "set NODE_ENV=test&& npx jest --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test&& node tests/index.js",
     "test:force": "set NODE_ENV=test&& npx jest --detectOpenHandles --forceExit"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "pg": "^8.13.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "supertest": "^7.0.0"
   },
   "jest": {
